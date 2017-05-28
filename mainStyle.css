@@ -1,0 +1,78 @@
+.inputBox{
+margin:30px 15px;
+
+}
+.main-Weather{
+    text-align: center;
+    width:auto;
+    height:260px;
+    border-radius: 15px;
+    background-color:#3f51b5;
+    -oz-box-shadow:0 0 10px #000000;
+    -webkit-box-shadow:0 0 10px #000000;
+    box-shadow:0 0 10px #000000;
+}
+body{background-color:#2196f3}
+.left-Weather{
+    float:left;
+    width:30%;
+    height:100%;
+}
+.right-Weather{
+    float:right;
+    background-color:rgba(255,255,255,0.1);
+    width:70%;
+    height:100%;
+    text-align: center;
+}
+.search-container{
+    text-align:center;
+}
+.bottom-left{
+    max-height:15%;
+}
+.debug-border{
+    border: 1px hide  black;
+}
+.right-Container{
+    height:100%;
+    width:25%;
+    float:left;
+}
+.bottom-border{
+    border-bottom: 1px solid  black;
+}
+.left-border{
+    border-left: 1px solid  black;
+}
+.right-Container img{
+    padding-top:15px;
+    width:25%;
+     height:30%;
+}
+.secondary-Weather{
+     text-align: center;
+    width:20%;
+    height:260px;
+    margin:15px;
+    display:inline-block;
+      background-color:#3f51b5;
+    -oz-box-shadow:0 0 10px #000000;
+    -webkit-box-shadow:0 0 10px #000000;
+    box-shadow:0 0 10px #000000;
+}
+.secondary-Container{
+    text-align: center;
+
+}
+.easy-autocomplete{
+      display:inline-block;  
+}
+.easy-autocomplete-container { max-height: 160px; overflow: auto; overflow-y: auto; overflow-x:hidden; }
+
+.footer{
+    text-align: center;
+}
+.systems{
+    margin-left:20px;
+}
