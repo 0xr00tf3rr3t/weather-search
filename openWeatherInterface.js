@@ -6,7 +6,7 @@ $(document).ready(function () {
     $(".main-Weather").hide();
     $(".secondary-Container").hide();
     
-   getLocation();
+   //getLocation();
     populateDropdown();
          
       var messurementsystem="metric";
@@ -42,11 +42,12 @@ $(document).ready(function () {
         var day5Temp=document.getElementById("day5-temp");
 
         var citySearch=document.getElementById("cityName");
-        var countrySearch=document.getElementById("countryName");
+        var countrySearch=document.getElementById("countryName");       
 
 $("#system-metric").on("click",function(){setMetric();})
 $("#system-imperial").on("click",function(){setImperial();})
 
+   
     $("#btnSearch").on("click",function(){getWeather();})
 
 
@@ -55,40 +56,43 @@ $("#system-imperial").on("click",function(){setImperial();})
         var city =$("#cityName").val();
             var country=$("#countryName").val();
 
-        $.getJSON("http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+","+country+"&cnt=6&units="+messurementsystem +"&appid="+APIKEY, function (json) {
+        $.getJSON("temp.json", function (weatherData) {
             console.log("Connected!");
-            console.log(json.list);
-            console.log("http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+","+country+"&cnt=6&units="+messurementsystem +"&appid="+APIKEY)
+            console.log(weatherData);
+        
+       
 
-            $(currentDayStatus).html(json.list[0].weather[0].main);
-            $("#current-Status-img").attr("src","images/"+json.list["0"].weather["0"].icon+".png");
-            $(currentDayTemp).html(json.list[0].temp.day+"&deg");
-            $(currentDayMinTemp).html(json.list[0].temp.min+"&deg");
-            $(currentDayMaxTemp).html(json.list[0].temp.max+"&deg");
-            $(currentDayHumidity).html(json.list[0].humidity+"%");
-            $(currentDayClouds).html(json.list[0].clouds+"%");
-            $(currentDayWindsSpeed).html(json.list[0].speed);
-            $(currentDayWindsDir).html(getWindDirection(json.list[0].deg)); 
+            $(currentDayStatus).html(weatherData.currently.summary);
+            $("#current-Status-img").attr("src","images/"+weatherData.currently.icon+".png");
+            $(currentDayTemp).html(weatherData.currently.temperature+"&deg");
+            $(currentDayMinTemp).html(weatherData.daily.data["0"].temperatureMin+"&deg");
+            $(currentDayMaxTemp).html(weatherData.daily.data["0"].temperatureMax+"&deg");
+            $(currentDayHumidity).html(weatherData.currently.humidity*100+"%");
+            $(currentDayClouds).html(weatherData.currently.cloudCover*100+"%");
+            $(currentDayWindsSpeed).html(weatherData.currently.windSpeed);
+            $(currentDayWindsDir).html(getWindDirection(weatherData.currently.windBearing)); 
 
-            $(day2Status).html(json.list[1].weather["0"].main);
-            $("#day2-Status-img").attr("src","images/"+json.list["1"].weather["0"].icon+".png");
-            $(day2Temp).html(json.list[1].temp.day+"&deg");
+            $(day2Status).html(weatherData.daily.data[1].summary);
+            $("#day2-Status-img").attr("src","images/"+weatherData.daily.data[1].icon+".png");
+            $(day2Temp).html(weatherData.daily.data[1].temperatureMin+"&deg -"+weatherData.daily.data[1].temperatureMax+"&deg");
             //
-             $(day3Status).html(json.list[2].weather["0"].main);
-            $("#day3-Status-img").attr("src","images/"+json.list["2"].weather["0"].icon+".png");
-            $(day3Temp).html(json.list[2].temp.day+"&deg");
+             $(day3Status).html(weatherData.daily.data[2].summary);
+             $("#day3-Status-img").attr("src","images/"+weatherData.daily.data[2].icon+".png");
+            $(day3Temp).html(weatherData.daily.data[2].temperatureMin+"&deg -"+weatherData.daily.data[2].temperatureMax+"&deg");
             //
-             $(day4Status).html(json.list[3].weather["0"].main);
-            $("#day4-Status-img").attr("src","images/"+json.list["3"].weather["0"].icon+".png");
-            $(day4Temp).html(json.list[3].temp.day+"&deg");
+            $(day4Status).html(weatherData.daily.data[3].summary);
+            $("#day4-Status-img").attr("src","images/"+weatherData.daily.data[3].icon+".png");
+            $(day4Temp).html(weatherData.daily.data[3].temperatureMin+"&deg -"+weatherData.daily.data[3].temperatureMax+"&deg");
             //
-            $(day5Status).html(json.list[4].weather["0"].main);
-            $("#day5-Status-img").attr("src","images/"+json.list["3"].weather["0"].icon+".png");
-            $(day5Temp).html(json.list[4].temp.day+"&deg");
-        });
+            $(day5Status).html(weatherData.daily.data[4].summary);
+            $("#day5-Status-img").attr("src","images/"+weatherData.daily.data[4].icon+".png");
+            $(day5Temp).html(weatherData.daily.data[4].temperatureMin+"&deg -"+weatherData.daily.data[4].temperatureMax+"&deg");
+        }
+        );
+      
          $(".main-Weather").show();
        $(".secondary-Container").show();
-       json=null;
+       
     }
     function getLocation()
     {
@@ -96,13 +100,14 @@ $("#system-imperial").on("click",function(){setImperial();})
 
     $("#cityName").val(json.city);
     $("#countryName").val(json.countryCode);
+
      });
     }
 
     function getWindDirection(directionNumber) // Change the incoming Wind Direction from degrees to Letters
     {
-        if (directionNumber==0||directionNumber==360)
-            {``
+        if (directionNumber===0||directionNumber==360)
+            {
                 return "N";
             }
         if (directionNumber>0 && directionNumber<45)
@@ -231,7 +236,7 @@ $("#system-imperial").on("click",function(){setImperial();})
        messurementsystem="imperial";
     }
     
-})
+});
 
      
            
