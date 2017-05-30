@@ -62,7 +62,7 @@ $(document).ready(function () {
         var city = $("#cityName").val();
         var country = $("#countryName").val();
 
-        $.getJSON("https://crossorigin.me/https://api.darksky.net/forecast/" + APIKEY + "/" + latitude + "," + longitude + "?exclude=minutely,hourly,alerts,flags&callback=?", function (weatherData) {
+        $.getJSON("https://api.darksky.net/forecast/" + APIKEY + "/" + latitude + "," + longitude + "?exclude=minutely,hourly,alerts,flags&callback=?", function (weatherData) {
             console.log("Connected!");
             console.log(weatherData);
 
