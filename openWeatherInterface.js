@@ -2,16 +2,14 @@ $(document).ready(function () {
     var latitude;
     var longitude;
     getLocation();
+
     var APIKEY = "7fdc457dab13ca98a759fe00466078b9";
     console.log("API key Loaded!");
 
     $(".main-Weather").hide();
     $(".secondary-Container").hide();
-
-    //getLocation();
     populateDropdown();
 
-    var messurementsystem = "metric";
     //Current Weather Variables
     var currentDayStatus = document.getElementById("current-Status");
     var currentDayIcon = document.getElementById("current-Status-img");
@@ -46,11 +44,17 @@ $(document).ready(function () {
     var citySearch = document.getElementById("cityName");
     var countrySearch = document.getElementById("countryName");
 
-    $("#system-metric").on("click", function () { setMetric(); })
-    $("#system-imperial").on("click", function () { setImperial(); })
+    $("#system-metric").on("click", function () {
+        setMetric();
+    });
+    $("#system-imperial").on("click", function () {
+        setImperial();
+    });
 
 
-    $("#btnSearch").on("click", function () { getWeather(); })
+    $("#btnSearch").on("click", function () {
+        getWeather();
+    })
 
 
     //Makes the API Call to the Open Weather API
@@ -58,7 +62,7 @@ $(document).ready(function () {
         var city = $("#cityName").val();
         var country = $("#countryName").val();
 
-        $.getJSON("https://api.darksky.net/forecast/"+APIKEY+"/"+latitude+","+longitude+"?exclude=minutely,hourly,alerts,flags", function (weatherData) {
+        $.getJSON("https://api.darksky.net/forecast/" + APIKEY + "/" + latitude + "," + longitude + "?exclude=minutely,hourly,alerts,flags&callback=?", function (weatherData) {
             console.log("Connected!");
             console.log(weatherData);
 
@@ -89,20 +93,19 @@ $(document).ready(function () {
             $(day5Status).html(weatherData.daily.data[4].summary);
             $("#day5-Status-img").attr("src", "images/" + weatherData.daily.data[4].icon + ".png");
             $(day5Temp).html(weatherData.daily.data[4].temperatureMin + "&deg -" + weatherData.daily.data[4].temperatureMax + "&deg");
-        }
-        );
+        });
 
         $(".main-Weather").show();
         $(".secondary-Container").show();
 
     }
+
     function getLocation() {
-        var options =
-            {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            };
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
 
         function success(position) {
             var crds = position.coords;
@@ -112,6 +115,7 @@ $(document).ready(function () {
             console.log(longitude);
             getWeather();
         }
+
         function error(error) {
             alert("Could not get location, please try again or do it manually.");
         }
@@ -129,50 +133,37 @@ $(document).ready(function () {
         }
         if (directionNumber > 0 && directionNumber < 45) {
             return "NNE";
-        }
-        else if (directionNumber == 45) {
+        } else if (directionNumber == 45) {
             return "NE";
-        }
-        else if (directionNumber > 45 && directionNumber < 90) {
+        } else if (directionNumber > 45 && directionNumber < 90) {
             return "ENE";
-        }
-        else if (directionNumber == 90) {
+        } else if (directionNumber == 90) {
             return "E";
-        }
-        else if (directionNumber > 90 && directionNumber < 135) {
+        } else if (directionNumber > 90 && directionNumber < 135) {
             return "ESE";
-        }
-        else if (directionNumber == 135) {
+        } else if (directionNumber == 135) {
             return "SE";
-        }
-        else if (directionNumber > 135 && directionNumber < 180) {
+        } else if (directionNumber > 135 && directionNumber < 180) {
             return "SSE";
-        }
-        else if (directionNumber == 180) {
+        } else if (directionNumber == 180) {
             return "S";
-        }
-        else if (directionNumber > 180 && directionNumber < 225) {
+        } else if (directionNumber > 180 && directionNumber < 225) {
             return "SSW";
-        }
-        else if (directionNumber == 225) {
+        } else if (directionNumber == 225) {
             return "SSW";
-        }
-        else if (directionNumber > 225 && directionNumber < 270) {
+        } else if (directionNumber > 225 && directionNumber < 270) {
             return "WSW";
-        }
-        else if (directionNumber == 270) {
+        } else if (directionNumber == 270) {
             return "W";
-        }
-        else if (directionNumber > 270 && directionNumber < 315) {
+        } else if (directionNumber > 270 && directionNumber < 315) {
             return "WNW";
-        }
-        else if (directionNumber == 315) {
+        } else if (directionNumber == 315) {
             return "NW";
-        }
-        else if (directionNumber > 315 && directionNumber < 360) {
+        } else if (directionNumber > 315 && directionNumber < 360) {
             return "NNW";
         }
     }
+
     function populateDropdown() //Populate both input box
     {
         var cities = {
@@ -231,28 +222,4 @@ $(document).ready(function () {
         $("#countryName").easyAutocomplete(country);
 
     }
-
-    function setMetric() {
-        $("#system-imperial").addClass("btn-default");
-
-        $("#system-imperial").removeClass("btn-primary");
-        $("#system-metric").removeClass("btn-default")
-        $("#system-metric").addClass("btn-primary");
-        messurementsystem = "metric";
-
-    }
-
-    function setImperial() {
-        $("#system-metric").addClass("btn-default");
-
-        $("#system-metric").removeClass("btn-primary");
-        $("#system-imperial").removeClass("btn-default");
-        $("#system-imperial").addClass("btn-primary");
-        messurementsystem = "imperial";
-    }
-
 });
-
-
-
-
